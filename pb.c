@@ -46,7 +46,7 @@ buildExecutionPlan(node) {
 //
 
 
-// There node might be part of multiple nested diamond structures. Thus, each ControlFlow node carries an identifier that relates it to a single diamond structure.
+// There node might be part of multiple nested diamond structures. Thus, each ControlFlow node carries an identifier that relates it to a single diamond structure. By convention, the identifier is the nodeId of the first node at the top of the diamond
 //
 
 // if a node is part of the right-most () branch
