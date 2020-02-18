@@ -1,0 +1,45 @@
+byte[] bytecode = TheClass.class.getResourceAsStream("TheClass.class").readAllBytes(); // now throw it at SHA-512 or whatever
+
+
+Why stop at the class boundary? What if an external method the class uses changes?
+Hash module?
+
+
+<s> diggin' real deep on this one: Put 2 public static final constants in the class file; one is the 'API version' (2 classes with different versions here are not compatible), the other is 'nonSigificantReleaseTracker' - bumping this up does NOT imply that. Then, have an annotation processor that stores a mapping of API+nsrt coding to a hash. as long as the hashes are the same, it is valid for any class file to have an
+<s> API+nsrt coding that's already in this dictionary file. But this ap will error out if the same API+nsrt results in a different hash.
+<s> The mesage produced can now tell the developer: You MUST act – either bump API version or nsrt, this compilation will not succeed unless you do one of these things.
+<s> I don't think there is any way to figure out which of two needs to be bumped automatically, but surely if you tell the developer what to do, the only way they mess this up, is if they are idiots, and if you let idiots check in code, there is no way to avoid disaster.
+
+HikariCP
+
+----------------------------------------------------------------
+
+Connection conn = DriverManager.getConnection(dbURL, user, pass)
+
+try (Connection conn = ds.getConnection(); PreparedStatement ps = conn.prepareStatement(SQL_QUERY)) {
+	ps.setString(1, foobar);
+	try (ResultSet rs = ps.executeQuery()) {
+		if (rs.next()) {
+			this.id = rs.getInt("id");
+		}
+	}
+} catch (SQLException e) {
+	LOG.error(null, e);
+	throw new Exception();
+}
+
+
+    private void initDbConnection() {
+        PGSimpleDataSource ds = new PGSimpleDataSource();
+        ds.setServerName("localhost");
+        ds.setDatabaseName("mydb");
+        ds.setUser("dkarampi");
+        ds.setPassword("password");
+        jdbi = Jdbi.create(ds);
+    }
+
+        jdbi.useHandle(handle -> handle.createUpdate(statement)
+                .bind("timestamp", timestamp)
+                .bind("foo", foo)
+                .bind("bar", bar)
+                .execute());
